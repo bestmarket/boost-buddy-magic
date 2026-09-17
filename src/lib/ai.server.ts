@@ -79,7 +79,7 @@ async function gatewayText(system: string, prompt: string, reasoning: string): P
 
 async function geminiText(key: string, system: string, prompt: string): Promise<string> {
   const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -153,8 +153,11 @@ export async function askAI(
       text = await openaiText(provider.apiKey, system, prompt);
     } else if (provider.id === "claude-sonnet" && provider.apiKey) {
       text = await claudeText(provider.apiKey, system, prompt);
-    } else if (provider.id === "gemini-flash" && provider.apiKey) {
-      text = await geminiText(provider.apiKey, system, prompt);
+    } else if (provider.id === "gemini-flash") {
+      const { withGeminiKey } = await import("./geminiKeys.server");
+      text = await withGeminiKey(provider.apiKey ?? process.env["GOOGLE_API_KEY"] ?? null, (key) =>
+        geminiText(key, system, prompt),
+      );
     } else {
       text = await gatewayText(system, prompt, reasoning);
     }
