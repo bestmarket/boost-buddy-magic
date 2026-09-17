@@ -136,6 +136,36 @@ export type Database = {
         }
         Relationships: []
       }
+      gemini_keys: {
+        Row: {
+          active: boolean
+          api_key: string
+          created_at: string
+          failures: number
+          id: string
+          label: string
+          last_used_at: string | null
+        }
+        Insert: {
+          active?: boolean
+          api_key: string
+          created_at?: string
+          failures?: number
+          id?: string
+          label?: string
+          last_used_at?: string | null
+        }
+        Update: {
+          active?: boolean
+          api_key?: string
+          created_at?: string
+          failures?: number
+          id?: string
+          label?: string
+          last_used_at?: string | null
+        }
+        Relationships: []
+      }
       ideas: {
         Row: {
           angle: string | null
