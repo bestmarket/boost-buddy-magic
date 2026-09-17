@@ -226,6 +226,32 @@ async function bytesFrom(res: Response): Promise<Uint8Array> {
   return new Uint8Array(await res.arrayBuffer());
 }
 
+/** Google Gemini 2.5 Flash Image — free tier, fast single-call generation. */
+async function geminiImage(key: string, prompt: string): Promise<Uint8Array> {
+  const res = await fetch(
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { responseModalities: ["IMAGE"] },
+      }),
+    },
+  );
+  if (!res.ok) throw await gatewayError(res);
+  const body = (await res.json()) as {
+    candidates?: Array<{
+      content?: { parts?: Array<{ inlineData?: { data?: string }; inline_data?: { data?: string } }> };
+    }>;
+  };
+  for (const part of body.candidates?.[0]?.content?.parts ?? []) {
+    const data = part.inlineData?.data ?? part.inline_data?.data;
+    if (data) return base64ToBytes(data);
+  }
+  throw new Error("The image could not be generated.");
+}
+
 async function pollinationsImage(prompt: string): Promise<Uint8Array> {
   const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1536&height=1024&nologo=true`;
   return bytesFrom(await fetch(url));
