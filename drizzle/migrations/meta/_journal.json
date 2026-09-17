@@ -1,5 +1,55 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789561658325,
+      "tag": "0000_import_speeder_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789567418018,
+      "tag": "0001_apply_imported_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789571564698,
+      "tag": "0002_import_speeder_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789573584068,
+      "tag": "0003_admin_governance",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789577182985,
+      "tag": "0004_apply_imported_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789620018090,
+      "tag": "0005_import_speeder_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789620052040,
+      "tag": "0006_admin_governance_and_voice_settings",
+      "breakpoints": true
+    }
+  ]
 }
