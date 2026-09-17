@@ -114,6 +114,7 @@ const UNIT_COST: Record<string, number> = {
   elevenlabs: 0.03,
   "edge-tts": 0,
   kokoro: 0,
+  "gemini-image": 0,
   pollinations: 0,
   huggingface: 0,
   "fal-flux": 0.008,
