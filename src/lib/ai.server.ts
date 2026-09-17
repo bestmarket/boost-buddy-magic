@@ -153,8 +153,11 @@ export async function askAI(
       text = await openaiText(provider.apiKey, system, prompt);
     } else if (provider.id === "claude-sonnet" && provider.apiKey) {
       text = await claudeText(provider.apiKey, system, prompt);
-    } else if (provider.id === "gemini-flash" && provider.apiKey) {
-      text = await geminiText(provider.apiKey, system, prompt);
+    } else if (provider.id === "gemini-flash") {
+      const { withGeminiKey } = await import("./geminiKeys.server");
+      text = await withGeminiKey(provider.apiKey ?? process.env["GOOGLE_API_KEY"] ?? null, (key) =>
+        geminiText(key, system, prompt),
+      );
     } else {
       text = await gatewayText(system, prompt, reasoning);
     }
